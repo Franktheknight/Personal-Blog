@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <article class="media content-section">
+        <img class='rounded-circle article-img' src="{{ object.author.profile.image.url }}">
+         <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+                <small class="text-muted">{{ object.date_posted|date:'F d, Y' }}</small>
+                {% if object.author == user %}
+                    <div>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+            <h2 class="article-title">{{ object.title }}</h2>
+            <p class="article-content">{{ object.content }}</p>
+        </div>
+    </article>
+    <br/>
+    <h2>Comments: <i class="fas fa-comments"></i></h2>
+    {% if not post.comments.all %}
+        <h3 class='lead'>No Comments Yet ...</h3>
+    {% else %}
+        {% for comment in post.comments.all %}
+            <div class='card mb-2 '>
+                <div class='card-body'>
+                    <div class="article-metadata">
+                        <h5 class='card-title'>{{ comment.name }} - {{ comment.date_added }}</h5>
+                    </div>
+                    <p class='card-text'>{{ comment.body }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <a class='btn btn-outline-info' href="{% url 'comment-create' post.pk %}">Add Comment</a>
+    <br/><br/>
+{% endblock content %}

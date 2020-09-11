@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = 'personal_web.urls'
 
